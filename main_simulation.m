@@ -98,6 +98,7 @@ err_obj = [mean(sqrt(Eobj_NP)); mean(sqrt(Eobj_OL)); mean(sqrt(Eodom_Robust)); m
 T = table(mean_odom,cum_odom,no_msts,no_obj,err_obj,...
     'RowNames',algo);
 %%
+figure
 set(0,'DefaultLineMarkerSize',10)
 semilogx(no_obj(1), err_obj(1),'ko','MarkerFaceColor','k');hold on;
 semilogx(no_obj_ol, err_obj_ol,'b^','MarkerFaceColor','b');
@@ -108,6 +109,7 @@ xlabel('number of objects');ylabel error;
 legend('NP-Graph','OL','R-SLAM','FbF','Ground Truth');
 
 %%
+figure
 semilogy(cumsum(sqrt(Eodom_NP(1:20:end))),'k-o');hold on;
 semilogy(cumsum(sqrt(Eodom_OL(1:20:end))),'b-^');
 semilogy(cumsum(sqrt(Eodom_Robust(1:20:end))),'r-s');
