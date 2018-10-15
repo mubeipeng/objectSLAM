@@ -1,7 +1,8 @@
 clear all;
 %% generate 2D objects
 truth_objects = rand(15,2)*10;
-truth_objects(:,3)=mod(1:15,5);
+truth_objects(:,3) = mod(1:15, 5);
+%truth_objects(:,3)=[1:5,1:5,1:5];
 
 %% plot 2D objects
 figure; hold on; set(0,'DefaultLineMarkerSize',10)
@@ -36,7 +37,14 @@ end
 for i=1:length(truth_traj)-1
     odoms(i,3)=atan2(truth_traj(i+1,2)-truth_traj(i,2),truth_traj(i+1,1)-truth_traj(i,1));
 end
+
+truth_traj = truth_traj(1:end-1,:);
+
 odoms(end,3)=odoms(end-1,3);
+odoms(:,1:2) = truth_traj(1:end,1:2);
+
+truth_traj(1:end,3) = odoms(:,3);
+truth_traj(end, 3) = truth_traj(end,3);
 
 %%
 for i=2:length(odoms)
@@ -61,5 +69,14 @@ for i=2:length(odoms)
     lm_edge.id1=[lm_edge.id1 repmat(i,1,length(idx))-1];
     lm_edge.id2=[lm_edge.id2 idx'];
     lm_edge.dpos=[lm_edge.dpos dpos(:,idx)];
+    % Handle lm_edge label being 0.
+    % ALternative will be to handle lm_edge being 0 when it is being used
+    % as the index in the processor object
+    
     lm_edge.label=[lm_edge.label truth_objects(idx,3)'];
 end
+
+lm_edge.label = 5*(lm_edge.label == 0) + lm_edge.label;
+
+%% save data as mat file
+save('data/my_simulation.mat', 'AOV', 'FOV', 'lm_edge', 'node_edge', 'truth_objects', 'truth_traj');

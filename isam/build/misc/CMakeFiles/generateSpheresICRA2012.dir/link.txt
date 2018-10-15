@@ -1,0 +1,1 @@
+/usr/bin/c++   -O3 -DNDEBUG   CMakeFiles/generateSpheresICRA2012.dir/generateSpheresICRA2012.cpp.o  -o ../../bin/generateSpheresICRA2012 -rdynamic ../../lib/libisam.a -lcholmod -lamd -lcolamd -lcamd -lccolamd 

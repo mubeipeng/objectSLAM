@@ -262,6 +262,8 @@ methods
             obj=obj.DPsample();
             obj.write_isam('isam_input.txt');
             !isam/bin/isam isam_input.txt -W isam_output.txt -B
+            % Add an exception where the code breaks when output isnt
+            % genereated because of isam failure.
             [obj] = obj.read_isam('isam_output.txt');
         end
     end

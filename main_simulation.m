@@ -1,8 +1,12 @@
 addpath('include/');
 
 %% load data and add noise
-load('data/simulation.mat');
-lm_edge.dpos = lm_edge.dpos + randn(2,1098)*0.1;
+
+load(strcat('data/', data_location));
+% Change the random number matrix size to generate according to size of the
+% data matrix
+data_size = size(lm_edge.dpos);
+lm_edge.dpos = lm_edge.dpos + randn(data_size)*0.1;
 node_edge.dpos = node_edge.dpos+ randn(size(node_edge.dpos))*0.02;
 node_edge.dtheta = node_edge.dtheta + randn(size(node_edge.dtheta))*0.01;
 
@@ -16,7 +20,7 @@ set(fig,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), po
 plot(truth_traj(:,1),truth_traj(:,2),'k');
 hold on; 
         
-label={'tajectory'};
+label={'trajectory'};
 for i=1:5
     idx = truth_objects(:,3)==i-1;
     if sum(idx)>0
@@ -37,6 +41,7 @@ for i=1:5
    end
 end
 axis equal; axis off;
+title("True trajectory")
 legend(label);
         
 %% non-parametric
