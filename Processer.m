@@ -112,7 +112,7 @@ methods
         plot(odom(1,:),odom(2,:),'k');
         hold on; 
         
-        label={'tajectory'};
+        label={'trajectory'};
         p=[obj.objects.P];
         objpose = [obj.objects.pos];
         for i=1:size(p,1)

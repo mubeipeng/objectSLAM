@@ -1,7 +1,7 @@
 addpath('include/');
 
 %% load data and add noise
-
+data_location = 'simulation.mat';
 load(strcat('data/', data_location));
 % Change the random number matrix size to generate according to size of the
 % data matrix
