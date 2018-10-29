@@ -1,7 +1,7 @@
 addpath('include/');
 
 %% load data and add noise
-data_location = 'simulation.mat';
+data_location = 'my_simulation.mat';
 load(strcat('data/', data_location));
 % Change the random number matrix size to generate according to size of the
 % data matrix
@@ -47,7 +47,7 @@ legend(label);
 %% non-parametric
 pr = Processer();
 pr = pr.setupobjects(node_edge,lm_edge);
-pr = pr.optimize(5);
+pr = pr.optimize(15);
 % [Iodom_NP, Iobj_NP]=pr.computeEntropy();
 [Eodom_NP, Eobj_NP]=pr.computeError(truth_traj',truth_objects');
 pr.plot();
