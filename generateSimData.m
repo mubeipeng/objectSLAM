@@ -26,14 +26,24 @@ end
 [x,y] = ginput();
 
 %% generate odometry
-truth_traj=[];
-for i=2:length(x)
-    l = norm([x(i)-x(i-1) y(i)-y(i-1)]);
-    t=0:0.1:l;
-    xq=interp1([0 l],[x(i-1) x(i)],t,'spline');
-    yq=interp1([0 l],[y(i-1) y(i)],t,'spline');
-    truth_traj = [truth_traj; [xq' yq']];
-end
+%truth_traj=[];
+
+% for i=2:length(x)
+%     l = norm([x(i)-x(i-1) y(i)-y(i-1)]);
+%     t=0:0.1:l;
+%     xq=interp1([0 l],[x(i-1) x(i)],t,'spline');
+%     yq=interp1([0 l],[y(i-1) y(i)],t,'spline');
+%     truth_traj = [truth_traj; [xq' yq']];
+% end
+
+t= 1:length(x);
+tq = 1:0.1:length(x);
+slope0 = 0; slopeF = 0;
+xq = spline(t, [slope0; x; slopeF], tq);
+yq = spline(t, [slope0; y; slopeF], tq);
+%figure; plot(x, y, 'o', xq, yq, ':.');
+truth_traj = [xq' yq'];
+
 for i=1:length(truth_traj)-1
     odoms(i,3)=atan2(truth_traj(i+1,2)-truth_traj(i,2),truth_traj(i+1,1)-truth_traj(i,1));
 end
