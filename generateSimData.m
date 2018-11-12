@@ -88,4 +88,4 @@ for i=2:length(odoms)
 end
 
 %% save data as mat file
-save('data/my_simulation_2.mat', 'AOV', 'FOV', 'lm_edge', 'node_edge', 'truth_objects', 'truth_traj');
+save('data/my_simulation_3.mat', 'AOV', 'FOV', 'lm_edge', 'node_edge', 'truth_objects', 'truth_traj');

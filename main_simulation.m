@@ -6,9 +6,9 @@ load(strcat('data/', data_location));
 % Change the random number matrix size to generate according to size of the
 % data matrix
 data_size = size(lm_edge.dpos);
-lm_edge.dpos = lm_edge.dpos + randn(data_size)*0.1;
-node_edge.dpos = node_edge.dpos+ randn(size(node_edge.dpos))*0.02;
-node_edge.dtheta = node_edge.dtheta + randn(size(node_edge.dtheta))*0.01;
+lm_edge.dpos = lm_edge.dpos + randn(data_size)*0.0;
+node_edge.dpos = node_edge.dpos+ randn(size(node_edge.dpos))*0.0;
+node_edge.dtheta = node_edge.dtheta + randn(size(node_edge.dtheta))*0.0;
 
 %% plot dataset
 fig = figure;
