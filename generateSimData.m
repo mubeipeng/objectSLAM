@@ -3,20 +3,21 @@ clear all;
 truth_objects = rand(15,2)*10;
 truth_objects(:,3) = mod(1:15, 5);
 %truth_objects(:,3)=[1:5,1:5,1:5];
+truth_objects(:,3) = 5*(truth_objects(:,3) == 0) + truth_objects(:,3);
 
 %% plot 2D objects
 figure; hold on; set(0,'DefaultLineMarkerSize',10)
 for i=1:length(truth_objects)
     switch truth_objects(i,3)
-        case 0 
+        case 1 
             plot(truth_objects(i,1),truth_objects(i,2),'bo','MarkerFaceColor','b');            
-        case 1
-            plot(truth_objects(i,1),truth_objects(i,2),'rd','MarkerFaceColor','r');
         case 2
-            plot(truth_objects(i,1),truth_objects(i,2),'ms','MarkerFaceColor','m');
+            plot(truth_objects(i,1),truth_objects(i,2),'rd','MarkerFaceColor','r');
         case 3
-            plot(truth_objects(i,1),truth_objects(i,2),'g^','MarkerFaceColor',[0.2 1 0.2]);
+            plot(truth_objects(i,1),truth_objects(i,2),'ms','MarkerFaceColor','m');
         case 4
+            plot(truth_objects(i,1),truth_objects(i,2),'g^','MarkerFaceColor',[0.2 1 0.2]);
+        case 5
             plot(truth_objects(i,1),truth_objects(i,2),'yp','MarkerFaceColor',[1 1 0.3],...
                                 'MarkerSize',15);
     end
@@ -101,7 +102,5 @@ for i=2:length(odoms)
     lm_edge.label=[lm_edge.label truth_objects(idx,3)'];
 end
 
-lm_edge.label = 5*(lm_edge.label == 0) + lm_edge.label;
-
 %% save data as mat file
-save('data/my_simulation.mat', 'AOV', 'FOV', 'lm_edge', 'node_edge', 'truth_objects', 'truth_traj');
+save('data/my_simulation_3.mat', 'AOV', 'FOV', 'lm_edge', 'node_edge', 'truth_objects', 'truth_traj');

@@ -1,14 +1,14 @@
 addpath('include/');
 
 %% load data and add noise
-data_location = 'my_simulation.mat';
+data_location = 'my_simulation_2.mat';
 load(strcat('data/', data_location));
 % Change the random number matrix size to generate according to size of the
 % data matrix
 data_size = size(lm_edge.dpos);
-lm_edge.dpos = lm_edge.dpos + randn(data_size)*0.1;
-node_edge.dpos = node_edge.dpos+ randn(size(node_edge.dpos))*0.02;
-node_edge.dtheta = node_edge.dtheta + randn(size(node_edge.dtheta))*0.01;
+lm_edge.dpos = lm_edge.dpos + randn(data_size)*0.0;
+node_edge.dpos = node_edge.dpos+ randn(size(node_edge.dpos))*0.0;
+node_edge.dtheta = node_edge.dtheta + randn(size(node_edge.dtheta))*0.0;
 
 %% plot dataset
 fig = figure;
@@ -22,7 +22,7 @@ hold on;
         
 label={'trajectory'};
 for i=1:5
-    idx = truth_objects(:,3)==i-1;
+    idx = truth_objects(:,3)==i;
     if sum(idx)>0
         label{end+1}=['class ' num2str(i)];
         switch i
@@ -47,7 +47,7 @@ legend(label);
 %% non-parametric
 pr = Processer();
 pr = pr.setupobjects(node_edge,lm_edge);
-pr = pr.optimize(15);
+pr = pr.optimize(5);
 % [Iodom_NP, Iobj_NP]=pr.computeEntropy();
 [Eodom_NP, Eobj_NP]=pr.computeError(truth_traj',truth_objects');
 pr.plot();
