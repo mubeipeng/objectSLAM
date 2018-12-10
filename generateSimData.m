@@ -70,19 +70,34 @@ lm_edge.id2=[];
 lm_edge.dpos=[];
 lm_edge.label=[];
 for i=2:length(odoms)
+    % This block of code find the landmarks which are in the field of
+    % vision of the robot at a particular point
+    
+    % This is a list of the distances of all the landmarks from the current
+    % position of the robot. Length of list = Total landmarks
+    % dx, dy = vector towards landmark wrt the object
+    % dtheta = angle of the vector wrt the car's body
     dx=truth_objects(:,1)-odoms(i,1);
     dy=truth_objects(:,2)-odoms(i,2);
     dtheta = mod(atan2(dy,dx)-odoms(i,3)+pi,2*pi)-pi;
     R = [cos(odoms(i,3)),sin(odoms(i,3)); -sin(odoms(i,3)) cos(odoms(i,3))];
     idx = find((dx.^2+dy.^2)<FOV^2 & abs(dtheta)<AOV);
+    % Convert the vector dx, dy which was wrt the world coordinates to
+    % vectors from the robot's body. dtheta was already changed
     dpos = R'*[dx';dy'];
-    lm_edge.id1=[lm_edge.id1 repmat(i,1,length(idx))-1];
-    lm_edge.id2=[lm_edge.id2 idx'];
-    lm_edge.dpos=[lm_edge.dpos dpos(:,idx)];
-    % Handle lm_edge label being 0.
-    % ALternative will be to handle lm_edge being 0 when it is being used
-    % as the index in the processor object
     
+    % This stores the position of the sensor state at which the landmark was
+    % observed by repeating the current index i(representing \alpha_k) by the
+    % number of landmarks found at that instant, which would be the len of
+    % the idx vector.
+    lm_edge.id1=[lm_edge.id1 repmat(i,1,length(idx))-1];
+    % This stores the landmark number (out of 15 here) (\beta_k)
+    lm_edge.id2=[lm_edge.id2 idx'];
+    % This is the distance measurement
+    lm_edge.dpos=[lm_edge.dpos dpos(:,idx)];
+    % This is the semantic measurement. $S_t = {s^c_k}$
+    % These measurements are considered perfect here and the score $s^s_k$ 
+    % and the bounding box $s^b_k$ is not part of the measurement here.
     lm_edge.label=[lm_edge.label truth_objects(idx,3)'];
 end
 
